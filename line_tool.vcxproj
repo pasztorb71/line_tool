@@ -141,6 +141,13 @@
   <ItemGroup>
     <ClCompile Include="line_tool.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="line_tool.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="line_tool.rc" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
