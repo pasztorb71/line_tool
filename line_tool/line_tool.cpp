@@ -66,13 +66,18 @@ int main(int argc, char* argv[])
 	//open input and output files
 	{
 		char errmsgbuf[100];
-		if (file_open(fname_i, "r", &fp_input, errmsgbuf, sizeof(errmsgbuf))) {
+		int err;
+		fp_input = _file_open(fname_i, "r", errmsgbuf, sizeof(errmsgbuf), &err);
+		
+		if (err != 0) {
 			printf("%s *** cannot open input file '%s': %s\n", pb_line_prefix, fname_i, errmsgbuf);
 			return -1;
 		}
 
+		fp_output = _file_open(fname_o, "r", errmsgbuf, sizeof(errmsgbuf), &err);
+
 		if (fname_o[0] != 0) {
-			if (file_open(fname_o, "w", &fp_output, errmsgbuf, sizeof(errmsgbuf))) {
+		if (err != 0) {
 				printf("%s *** cannot open output file '%s': %s\n", pb_line_prefix, fname_o, errmsgbuf);
 				return -1;
 			}
@@ -121,7 +126,32 @@ int main(int argc, char* argv[])
 
 //------------------------------------------------------------------------------------------------------------------
 
-int file_open(char* fname_i, const char* open_mode_i, FILE** fhandler_o, char* errmsg_io, int errmsg_maxlen)
+int parse_parameters(int n_argc, char* n_argv[])
+{
+	return -1;
+}
+//------------------------------------------------------------------------------------------------------------------
+
+char* set_mode_string(int mode)
+{
+	char mode_str[100];
+	return mode_str;
+}
+//------------------------------------------------------------------------------------------------------------------
+
+int print_header(char* pb_line_prefix, char* fname_i, char* fname_o, char* mode_str, int empty)
+{
+	return -1;
+}
+//------------------------------------------------------------------------------------------------------------------
+
+int open_files(char* fname_i, char* fname_o, FILE** fp_input, FILE** fp_output)
+{
+	return -1;
+}
+//------------------------------------------------------------------------------------------------------------------
+
+int _file_open(char* fname_i, const char* open_mode_i, FILE** fhandler_o, char* errmsg_io, int errmsg_maxlen)
 //returns err from fopen_s
 //clears errmsg_io
 {
@@ -139,6 +169,26 @@ int file_open(char* fname_i, const char* open_mode_i, FILE** fhandler_o, char* e
 		rv = err;
 	}
 	return rv;
+}
+
+FILE* _file_open(char* fname_i, const char* open_mode_i, char* errmsg_io, int errmsg_maxlen, int* err)
+//returns err from fopen_s
+//clears errmsg_io
+{
+	errno_t errno;
+	char errmsgbuf[100] = { 0 };
+	FILE* fp_input;
+
+	memset(errmsg_io, 0x00, errmsg_maxlen);
+	errno = fopen_s(&fp_input, fname_i, open_mode_i);
+	if (err) {
+		if (strerror_s(errmsgbuf, sizeof(errmsgbuf), errno)) {
+			strcpy_s(errmsgbuf, sizeof(errmsgbuf), "unknown error (default)");
+		}
+		strcpy_s(errmsg_io, errmsg_maxlen - 1, errmsgbuf);
+		*err = errno;
+	}
+	return fp_input;
 }
 
 //------------------------------------------------------------------------------------------------------------------
