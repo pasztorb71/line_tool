@@ -1,0 +1,5 @@
+﻿  pch.cpp
+  test_line_tool.cpp
+C:\Users\pasztor.bertalan\source\repos\line_tool\test_line_tool\test_line_tool.cpp(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     Creating library C:\Users\pasztor.bertalan\source\repos\line_tool\line_tool\Debug\test_line_tool.lib and object C:\Users\pasztor.bertalan\source\repos\line_tool\line_tool\Debug\test_line_tool.exp
+  test_line_tool.vcxproj -> C:\Users\pasztor.bertalan\source\repos\line_tool\line_tool\Debug\test_line_tool.dll
