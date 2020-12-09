@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "../line_tool/line_tool.cpp""
+#include "../line_tool/line_tool.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

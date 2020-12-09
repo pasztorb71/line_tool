@@ -5,7 +5,8 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>c:\Users\pasztor.bertalan\source\repos\line_tool\line_tool\Debug\a.txt</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>a.txt</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)\Debug\</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
 </Project>
