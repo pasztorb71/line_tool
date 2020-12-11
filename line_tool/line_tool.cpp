@@ -2,7 +2,8 @@
 #include <windows.h>
 #include <stdio.h>
 #include "line_tool.h"
-
+#include <stdexcept>
+#include <iostream>
 
 //------------------------------------------------------------------------------------------------------------------
 
@@ -18,20 +19,24 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	if (open_io(files, ARRAY_SIZE(files)) == 0) {
-
+	try {
+		open_io(files, ARRAY_SIZE(files));
 		if (files[output].fhandler == NULL) {
 			files[output].fhandler = stdout;
 		}
 		print_params(params, files);
-
 		if (main_task(files) == 0) {
 			print_records(params.mode, params.sort, files[output].fhandler);
 		}
+
+		close_io(files, ARRAY_SIZE(files));
+		free_records();
+	} 
+	catch (std::runtime_error& e)
+	{
+		std::cerr << e.what() << std::endl;
 	}
 
-	close_io(files, ARRAY_SIZE(files));
-	free_records();
 	return 0;
 }
 
@@ -184,7 +189,7 @@ int open_io(struct s_files* files, unsigned int asize)
 		files[i].fhandler = _file_open(files[i].fname, files[i].open_mode, files[i].errmsg, sizeof(files[i].errmsg), &files[i].err);
 		if (files[i].err && files[i].mandatory) {
 			printf("%s *** cannot open file \"%s\" with mode \"%s\": %s\n", pb_line_prefix, files[i].fname, files[i].open_mode, files[i].errmsg);
-			return -1;
+			throw std::runtime_error("Could not open file");
 		}
 	}
 	return 0;
