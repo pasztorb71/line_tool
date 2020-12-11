@@ -22,12 +22,11 @@ int main(int argc, char* argv[])
 
 		if (files[output].fhandler == NULL) {
 			files[output].fhandler = stdout;
+		}
+		print_params(params, files);
 
-			print_params(params, files);
-
-			if (main_task(files) == 0) {
-				print_records(params.mode, params.sort, files[output].fhandler);
-			}
+		if (main_task(files) == 0) {
+			print_records(params.mode, params.sort, files[output].fhandler);
 		}
 	}
 
