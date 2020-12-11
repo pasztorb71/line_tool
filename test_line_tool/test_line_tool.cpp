@@ -19,6 +19,31 @@ namespace testlinetool
 			Assert::AreEqual(0, err);
 		}
 
+		TEST_METHOD(test__remove_newline_true)
+		{
+			char text[100] = "test line with newline at end\n";
+			bool res = remove_newline(text);
+			Assert::AreEqual(true, res);
+		}
+		TEST_METHOD(test__remove_newline_false)
+		{
+			char text[100] = "test line with newline at end";
+			bool res = remove_newline(text);
+			Assert::AreEqual(false, res);
+		}
+		TEST_METHOD(test__remove_newline_emtpy)
+		{
+			char text[100] = "";
+			bool res = remove_newline(text);
+			Assert::AreEqual(false, res);
+		}
+		TEST_METHOD(test__remove_newline_NULL)
+		{
+			bool res = remove_newline(NULL);
+			Assert::AreEqual(false, res);
+		}
+
+		/*
 		TEST_METHOD(test_open_files)
 		{
 			FILE* fp_input;
@@ -39,7 +64,6 @@ namespace testlinetool
 			char mode_str[100] = "\0";
 			Assert::AreNotEqual('\n', set_mode_string(0)[0]);
 		}
-
 		TEST_METHOD(test_print_header)
 		{
 			char* pb_line_prefix = "[PBTOOL - lines]";
@@ -49,5 +73,6 @@ namespace testlinetool
 			int empty = 0;
 			Assert::AreEqual(0, print_header(pb_line_prefix, fname_i, fname_o, mode_str, empty));
 		}
+		*/
 	};
 }
