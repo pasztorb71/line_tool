@@ -14,6 +14,7 @@ enum file_type {
 struct s_files {
 	char fname[FILENAME_MAXLEN];
 	file_type ftype;
+	bool mandatory;
 	char open_mode[5];
 	FILE* fhandler;
 	char errmsg[100];
@@ -40,21 +41,20 @@ struct s_line {
 struct s_line* lines = NULL;
 long lines_cnt = 0;
 static const char* pb_line_prefix = "[PBTOOL - lines]";
+
 // -------------------------------------------------------------------------------------------------------------- functions
 
-int _file_open(char* fname_i, const char* open_mode_i, FILE** fhandler_o, char* errmsg_io, int errmsg_maxlen);
 FILE* _file_open(char* fname_i, const char* open_mode_i, char* errmsg_io, int errmsg_maxlen, int* err);
 int fill_new_record(char* line);
 long find_record(char* line);
 void free_records(void);
 void print_records(int o_mode, int to_sort, FILE* ofh);
 int cmpfunc_sort(const void* a, const void* b);
-int parse_parameters(int argc, char* argv[]);
-char* set_mode_string(int mode);
-int print_header(char* fname_i, char* fname_o, char* mode_str, int empty);
-int open_files(char* fname_i, char* fname_o, FILE** fp_input, FILE** fp_output);
-void print_info(struct s_params par,struct s_files* files);
-void open_io(struct s_files* files, unsigned int asize);
-void parse_params(int argc, char** argv, struct s_files* files);
-void main_task(struct s_files* files);
-
+void print_params(struct s_params par,struct s_files* files);
+int open_io(struct s_files* files, unsigned int asize);
+void close_io(struct s_files* files, unsigned int asize);
+int get_params(int argc, char** argv, struct s_files* files);
+int main_task(struct s_files* files);
+void print_helper(void);
+void set_defaults(struct s_files* files, unsigned int asize);
+bool remove_newline(char* str);
